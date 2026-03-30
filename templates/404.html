@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<section class="section" style="text-align: center; padding: 100px 40px;">
+    <h1 style="font-size: 80px; color: #e74c3c; margin-bottom: 20px;">404</h1>
+    <h2 style="color: #0a7c86; margin-bottom: 15px;">Page Not Found</h2>
+    <p style="color: #7f8c8d; font-size: 16px; margin-bottom: 30px;">
+        Sorry! The page you are looking for doesn't exist or has been moved.
+    </p>
+    
+    <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+        <a href="/" class="btn primary">🏠 Go Home</a>
+        <a href="/appointment" class="btn secondary">📅 Book Appointment</a>
+        <a href="/contact" class="btn secondary">📧 Contact Us</a>
+    </div>
+</section>
+
+{% endblock %}

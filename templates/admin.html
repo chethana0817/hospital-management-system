@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<section class="section" style="padding: 36px 40px; background: #eef5fa;">
+    <div class="admin-head" style="display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap; margin-bottom: 22px;">
+        <div>
+            <h1 style="font-size: 30px; color: var(--primary-color); margin-bottom: 6px;">🏥 Admin Portal</h1>
+            <p style="color: var(--text-light); font-size: 15px;">Compact view: bookings, status graph and accept controls.</p>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <a href="/admin/export" class="btn primary" style="padding: 10px 16px; font-size: 14px;">Export CSV</a>
+            <a href="/logout" class="btn secondary" style="padding: 10px 16px; font-size: 14px;">Logout</a>
+        </div>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="alert-stack" style="margin-bottom: 18px; display:grid; gap:8px;">
+        {% for category,message in messages %}
+        <div style="background: {{ 'rgba(39,174,96,.14)' if category=='success' else 'rgba(231,76,60,.14)' }}; color: {{ '#256c45' if category=='success' else '#b72f2f' }}; border-left: 4px solid {{ 'var(--success-color)' if category=='success' else 'var(--danger-color)' }}; padding: 10px 12px; border-radius: 8px;">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    <div class="admin-panel" style="display:grid; gap:18px;">
+        <div style="background: var(--bg-white); border-radius: 12px; padding: 18px 18px 16px; box-shadow: var(--shadow);">
+            <h2 style="margin:0 0 12px; font-size: 17px; color: var(--primary-color);">Appointment Status Overview</h2>
+            <canvas id="statusChart" style="width:100%; max-height:280px; height: 280px;"></canvas>
+        </div>
+
+        <div style="background: var(--bg-white); border-radius: 12px; padding: 18px; box-shadow: var(--shadow);">
+            <h2 style="margin:0 0 12px; font-size: 17px; color: var(--primary-color);">Booked Appointments</h2>
+            {% if data and data|length > 0 %}
+            <div style="overflow-x:auto;">
+                <table style="width:100%; border-collapse:collapse; font-size:14px; min-width:720px;">
+                    <thead>
+                        <tr style="background: #f3fbfe; color: var(--text-dark); text-align:left; border-bottom: 2px solid #dbe8f2;">
+                            <th style="padding:10px 11px;">#</th>
+                            <th style="padding:10px 11px;">Patient</th>
+                            <th style="padding:10px 11px;">Doctor</th>
+                            <th style="padding:10px 11px;">Date</th>
+                            <th style="padding:10px 11px;">Status</th>
+                            <th style="padding:10px 11px;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for entry in data %}
+                        {% set row = entry['row'] %}
+                        {% set status = row[7] if row|length > 7 else 'Pending' %}
+                        {% if status == 'Pending' %}{% set color = '#f39c12' %}{% elif status=='Confirmed' %}{% set color = '#4fc3c7' %}{% elif status=='Completed' %}{% set color = '#27ae60' %}{% elif status=='Cancelled' %}{% set color = '#e74c3c' %}{% else %}{% set color = '#7f8c8d' %}{% endif %}
+                        <tr style="border-bottom:1px solid #e7f2f8;">
+                            <td style="padding:10px 11px;">{{ loop.index }}</td>
+                            <td style="padding:10px 11px;">{{ row[0] }}</td>
+                            <td style="padding:10px 11px;">{{ row[4] }}</td>
+                            <td style="padding:10px 11px;">{{ row[6] }}</td>
+                            <td style="padding:10px 11px;"><span style="color: {{ color }}; font-weight: 600;">{{ status }}</span></td>
+                            <td style="padding:10px 11px;"><form method="POST" action="/admin/update_status" style="display:inline;"><input type="hidden" name="index" value="{{ entry['id'] }}" /><input type="hidden" name="new_status" value="Confirmed" /><button type="submit" class="btn primary" style="padding: 6px 9px; font-size:13px; min-width:80px;">Accept</button></form></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p style="font-size: 14px; color: var(--text-light);">No appointments currently booked.</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+<script>
+const statusStats = {{ status_counts | tojson | safe }};
+const labels = Object.keys(statusStats);
+const values = Object.values(statusStats);
+const palette = ['#f39c12','#4fc3c7','#27ae60','#e74c3c'];
+new Chart(document.getElementById('statusChart').getContext('2d'), {
+    type: 'doughnut',
+    data: {
+        labels: labels,
+        datasets: [
+            {
+                data: values,
+                backgroundColor: labels.map((_, i) => palette[i % palette.length]),
+                borderColor: '#fff',
+                borderWidth: 2
+            }
+        ]
+    },
+    options: {
+        plugins: {
+            legend: {
+                position: 'bottom',
+                labels: { color: '#2c4f67', boxWidth: 12 }
+            }
+        },
+        maintainAspectRatio: false,
+        cutout: '52%'
+    }
+});
+</script>
+
+{% endblock %}

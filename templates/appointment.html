@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<section class="section">
+    <h2>Book Your Appointment</h2>
+    <p style="max-width: 700px; margin: 0 auto 40px; color: #7f8c8d; font-size: 16px;">
+        Schedule a consultation with our experienced medical professionals
+    </p>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                {% if category == 'success' %}
+                    <div class="success-message" style="max-width: 500px; margin: 0 auto 20px;">{{ message }}</div>
+                {% elif category == 'error' %}
+                    <div class="error-container" style="max-width: 500px; margin: 0 auto 20px;">{{ message }}</div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST" action="/book" style="max-width: 500px;">
+        <input type="text" name="name" placeholder="Full Name *" required minlength="3">
+        
+        <input type="email" name="email" placeholder="Email Address *" required>
+        
+        <input type="tel" name="phone" placeholder="+91 9876543210 *" required pattern="[\d\+\-\s()]{10,}" 
+               title="Please enter a valid phone number (at least 10 digits)">
+        
+        <select name="department" required style="padding: 14px 18px; border: 2px solid #f5f7fa; border-radius: 10px; font-family: inherit; font-size: 15px;">
+            <option value="">-- Select Department --</option>
+            <option value="Cardiology">❤️ Cardiology</option>
+            <option value="Gynecology">👶 Gynecology & Obstetrics</option>
+            <option value="General Medicine">🏥 General Medicine</option>
+            <option value="Pediatrics">👶 Pediatrics</option>
+            <option value="Dermatology">💅 Dermatology</option>
+            <option value="ENT">👂 ENT (Ear, Nose, Throat)</option>
+        </select>
+        
+        <select name="doctor" required style="padding: 14px 18px; border: 2px solid #f5f7fa; border-radius: 10px; font-family: inherit; font-size: 15px;">
+            <option value="">-- Select Your Doctor --</option>
+            <option value="Dr. Rajesh Patel">Dr. Rajesh Patel (Cardiology)</option>
+            <option value="Dr. Geetha Sharma">Dr. Geetha Sharma (Gynecology)</option>
+            <option value="Dr. Pradeep Kumar">Dr. Pradeep Kumar (General Medicine)</option>
+            <option value="Dr. Sunita Reddy">Dr. Sunita Reddy (Pediatrics)</option>
+            <option value="Dr. Anjali Singh">Dr. Anjali Singh (Dermatology)</option>
+            <option value="Dr. Mohan Krishna">Dr. Mohan Krishna (ENT)</option>
+        </select>
+
+        <textarea name="reason" placeholder="Reason for Visit (symptoms/conditions) *" required style="padding: 14px 18px; border: 2px solid #f5f7fa; border-radius: 10px; font-family: inherit; font-size: 15px; resize: vertical; min-height: 100px;" minlength="10"></textarea>
+
+        <input type="date" name="date" required id="appointmentDate">
+        
+        <button type="submit" class="btn primary" style="width: 100%; font-size: 16px;">📅 Book Appointment</button>
+    </form>
+
+    <div style="max-width: 500px; margin: 40px auto; padding: 20px; background: #e8f5e9; border-left: 4px solid #27ae60; border-radius: 8px; color: #155724;">
+        <p style="margin: 0; font-size: 14px;">
+            <strong>✓ What to expect:</strong> Confirmation email within 5 minutes | Appointment reminders | Doctor's consultation notes
+        </p>
+    </div>
+</section>
+
+<script>
+// Set minimum date to today
+document.addEventListener('DOMContentLoaded', function() {
+    const today = new Date();
+    const dateInput = document.getElementById('appointmentDate');
+    if (dateInput) {
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        dateInput.min = `${yyyy}-${mm}-${dd}`;
+    }
+});
+</script>
+
+{% endblock %}

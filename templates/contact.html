@@ -1,0 +1,216 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- HERO SECTION -->
+<section class="hero" style="padding: 100px 40px; text-align: center;">
+    <div class="hero-content">
+        <h1>Get In Touch With Us</h1>
+        <p>We're Here to Help - Reach Out Anytime</p>
+    </div>
+</section>
+
+<!-- INTRO SECTION -->
+<section class="section light">
+    <h2>Contact Mathruchaya Hospital</h2>
+    <p style="max-width: 700px; margin: 0 auto 50px; color: #7f8c8d; font-size: 16px;">
+        Have questions? Need to schedule an appointment? Want to provide feedback? We'd love to hear from you. Visit us, call us, or send us a message - we're always here to help!
+    </p>
+</section>
+
+<!-- CONTACT FORM & INFO SECTION -->
+<section class="section">
+    <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start;">
+        
+        <!-- CONTACT FORM -->
+        <div>
+            <h3 style="color: #0a7c86; margin-bottom: 25px;">📧 Send Us a Message</h3>
+            
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        {% if category == 'success' %}
+                            <div class="success-message" style="margin-bottom: 20px;">{{ message }}</div>
+                        {% elif category == 'error' %}
+                            <div class="error-container" style="margin-bottom: 20px;">{{ message }}</div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST" action="/contact" style="display: flex; flex-direction: column; gap: 15px;">
+                <input type="text" name="name" placeholder="Your Full Name *" required minlength="3" style="padding: 12px 15px; border: 2px solid #f5f7fa; border-radius: 8px; font-family: inherit; font-size: 14px;">
+                
+                <input type="email" name="email" placeholder="Your Email Address *" required style="padding: 12px 15px; border: 2px solid #f5f7fa; border-radius: 8px; font-family: inherit; font-size: 14px;">
+                
+                <input type="tel" name="phone" placeholder="Phone Number (Optional)" style="padding: 12px 15px; border: 2px solid #f5f7fa; border-radius: 8px; font-family: inherit; font-size: 14px;">
+                
+                <input type="text" name="subject" placeholder="Subject *" required minlength="5" style="padding: 12px 15px; border: 2px solid #f5f7fa; border-radius: 8px; font-family: inherit; font-size: 14px;">
+                
+                <textarea name="message" placeholder="Your Message *" required minlength="20" style="padding: 12px 15px; border: 2px solid #f5f7fa; border-radius: 8px; font-family: inherit; font-size: 14px; resize: vertical; min-height: 150px;"></textarea>
+                
+                <button type="submit" class="btn primary" style="width: 100%; font-size: 15px;">📨 Send Message</button>
+            </form>
+        </div>
+
+        <!-- CONTACT INFO -->
+        <div>
+            <h3 style="color: #0a7c86; margin-bottom: 25px;">📍 Contact Information</h3>
+            
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+                
+                <!-- Phone -->
+                <div style="padding: 20px; background: #f5f7fa; border-radius: 10px; border-left: 4px solid #0a7c86;">
+                    <h4 style="color: #0a7c86; margin-bottom: 8px; font-size: 16px;">📞 Phone</h4>
+                    <p style="color: #2c3e50; margin: 0; line-height: 1.6;">
+                        <strong>Emergency:</strong> +91-9876543210<br>
+                        <strong>Appointments:</strong> +91-8765432109<br>
+                        <strong>General Inquiry:</strong> +91-7654321098
+                    </p>
+                </div>
+
+                <!-- Email -->
+                <div style="padding: 20px; background: #f5f7fa; border-radius: 10px; border-left: 4px solid #4fc3c7;">
+                    <h4 style="color: #0a7c86; margin-bottom: 8px; font-size: 16px;">✉️ Email</h4>
+                    <p style="color: #2c3e50; margin: 0; line-height: 1.6;">
+                        <strong>General:</strong> info@mathruchaya.com<br>
+                        <strong>Support:</strong> support@mathruchaya.com<br>
+                        <strong>Feedback:</strong> feedback@mathruchaya.com
+                    </p>
+                </div>
+
+                <!-- Address -->
+                <div style="padding: 20px; background: #f5f7fa; border-radius: 10px; border-left: 4px solid #0a7c86;">
+                    <h4 style="color: #0a7c86; margin-bottom: 8px; font-size: 16px;">📍 Address</h4>
+                    <p style="color: #2c3e50; margin: 0; line-height: 1.8;">
+                        Mathruchaya Hospital<br>
+                        Main Road, Opp. Town Hall<br>
+                        Kolar Gold Fields (KGF)<br>
+                        Karnataka - 563101<br>
+                        India
+                    </p>
+                </div>
+
+                <!-- Hours -->
+                <div style="padding: 20px; background: #f5f7fa; border-radius: 10px; border-left: 4px solid #4fc3c7;">
+                    <h4 style="color: #0a7c86; margin-bottom: 8px; font-size: 16px;">🕐 Hours</h4>
+                    <p style="color: #2c3e50; margin: 0; line-height: 1.8;">
+                        <strong>Monday - Saturday:</strong> 9:00 AM - 8:00 PM<br>
+                        <strong>Sunday:</strong> 10:00 AM - 6:00 PM<br>
+                        <strong>Emergency:</strong> 24/7 Available
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- LOCATION MAP SECTION -->
+<section class="section light">
+    <h2>Visit Our Hospital</h2>
+    <p style="max-width: 700px; margin: 0 auto 40px; color: #7f8c8d; font-size: 16px;">
+        Located in the heart of Kolar Gold Fields, easily accessible from all parts of the city
+    </p>
+    
+    <div style="max-width: 1000px; margin: 0 auto; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); height: 400px;">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3900.9523452870366!2d78.32157!3d13.19854!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bac6f8c7d7d7d7d%3A0x7d7d7d7d7d7d7d7d!2sKolar%20Gold%20Fields%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1600000000000" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+</section>
+
+<!-- QUICK ACTIONS SECTION -->
+<section class="section">
+    <h2>Quick Contact Options</h2>
+    <p style="max-width: 700px; margin: 0 auto 50px; color: #7f8c8d; font-size: 16px;">
+        Choose your preferred way to connect with us
+    </p>
+    
+    <div class="cards">
+        <div class="card" style="text-align: center; cursor: pointer; transition: transform 0.3s ease;">
+            <h3 style="font-size: 40px; margin-bottom: 10px;">📞</h3>
+            <h4 style="color: #0a7c86; margin-bottom: 10px;">Call Us Now</h4>
+            <p style="color: #7f8c8d; margin-bottom: 15px;">Speak directly with our support team</p>
+            <a href="tel:+919876543210" class="btn primary" style="display: inline-block;">Call Now</a>
+        </div>
+
+        <div class="card" style="text-align: center; cursor: pointer; transition: transform 0.3s ease;">
+            <h3 style="font-size: 40px; margin-bottom: 10px;">📧</h3>
+            <h4 style="color: #0a7c86; margin-bottom: 10px;">Email Us</h4>
+            <p style="color: #7f8c8d; margin-bottom: 15px;">Send us your queries anytime</p>
+            <a href="mailto:info@mathruchaya.com" class="btn primary" style="display: inline-block;">Send Email</a>
+        </div>
+
+        <div class="card" style="text-align: center; cursor: pointer; transition: transform 0.3s ease;">
+            <h3 style="font-size: 40px; margin-bottom: 10px;">💬</h3>
+            <h4 style="color: #0a7c86; margin-bottom: 10px;">WhatsApp Chat</h4>
+            <p style="color: #7f8c8d; margin-bottom: 15px;">Quick response via WhatsApp</p>
+            <a href="https://wa.me/919876543210?text=Hello%20Mathruchaya%20Hospital" target="_blank" class="btn primary" style="display: inline-block;">Chat Now</a>
+        </div>
+
+        <div class="card" style="text-align: center; cursor: pointer; transition: transform 0.3s ease;">
+            <h3 style="font-size: 40px; margin-bottom: 10px;">📅</h3>
+            <h4 style="color: #0a7c86; margin-bottom: 10px;">Book Appointment</h4>
+            <p style="color: #7f8c8d; margin-bottom: 15px;">Schedule your appointment online</p>
+            <a href="/appointment" class="btn primary" style="display: inline-block;">Book Now</a>
+        </div>
+
+        <div class="card" style="text-align: center; cursor: pointer; transition: transform 0.3s ease;">
+            <h3 style="font-size: 40px; margin-bottom: 10px;">🌐</h3>
+            <h4 style="color: #0a7c86; margin-bottom: 10px;">Follow Us</h4>
+            <p style="color: #7f8c8d; margin-bottom: 15px;">Connect on social media</p>
+            <div style="display: flex; gap: 10px; justify-content: center;">
+                <a href="https://facebook.com" target="_blank" style="color: #0a7c86; font-size: 24px; text-decoration: none;">f</a>
+                <a href="https://instagram.com" target="_blank" style="color: #0a7c86; font-size: 24px; text-decoration: none;">📷</a>
+                <a href="https://twitter.com" target="_blank" style="color: #0a7c86; font-size: 24px; text-decoration: none;">𝕏</a>
+                <a href="https://youtube.com" target="_blank" style="color: #0a7c86; font-size: 24px; text-decoration: none;">▶️</a>
+            </div>
+        </div>
+
+        <div class="card" style="text-align: center; cursor: pointer; transition: transform 0.3s ease;">
+            <h3 style="font-size: 40px; margin-bottom: 10px;">🆘</h3>
+            <h4 style="color: #e74c3c; margin-bottom: 10px;">Emergency</h4>
+            <p style="color: #7f8c8d; margin-bottom: 15px;">24/7 emergency services</p>
+            <a href="tel:9876543210" class="btn" style="display: inline-block; background: #e74c3c; color: white;">Emergency</a>
+        </div>
+    </div>
+</section>
+
+<!-- FREQUENTLY ASKED QUESTIONS -->
+<section class="section light">
+    <h2>Frequently Asked Questions</h2>
+    <div style="max-width: 800px; margin: 0 auto;">
+        <div style="margin-bottom: 25px;">
+            <h4 style="color: #0a7c86; margin-bottom: 10px; font-size: 16px;">How do I book an appointment?</h4>
+            <p style="color: #2c3e50; margin: 0; line-height: 1.7;">You can book an appointment through our website using the "Book Appointment" form, by calling us at +91-8765432109, or visiting our hospital directly during working hours.</p>
+        </div>
+
+        <div style="margin-bottom: 25px;">
+            <h4 style="color: #0a7c86; margin-bottom: 10px; font-size: 16px;">What documents should I bring for my first visit?</h4>
+            <p style="color: #2c3e50; margin: 0; line-height: 1.7;">Please bring a valid ID, health insurance card (if available), previous medical reports, and a list of current medications.</p>
+        </div>
+
+        <div style="margin-bottom: 25px;">
+            <h4 style="color: #0a7c86; margin-bottom: 10px; font-size: 16px;">Is there a waiting period for appointments?</h4>
+            <p style="color: #2c3e50; margin: 0; line-height: 1.7;">Appointments are typically on a first-come, first-served basis. Emergency cases are given priority. Average waiting time is 15-30 minutes.</p>
+        </div>
+
+        <div style="margin-bottom: 25px;">
+            <h4 style="color: #0a7c86; margin-bottom: 10px; font-size: 16px;">Do you accept insurance?</h4>
+            <p style="color: #2c3e50; margin: 0; line-height: 1.7;">Yes, we accept most major health insurance plans including Ayushman Bharat, PMJAY, and private insurance. Please check with our billing department for details.</p>
+        </div>
+
+        <div>
+            <h4 style="color: #0a7c86; margin-bottom: 10px; font-size: 16px;">Can I get a second opinion?</h4>
+            <p style="color: #2c3e50; margin: 0; line-height: 1.7;">Absolutely! We welcome patients seeking second opinions. You can book a consultation with any of our specialists at your convenience.</p>
+        </div>
+    </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="cta">
+    <h2>Need Help? We're Just a Click Away</h2>
+    <p>Contact us today and let us help you with your healthcare needs</p>
+    <a href="/appointment" class="btn primary">📅 BOOK APPOINTMENT</a>
+</section>
+
+{% endblock %}
